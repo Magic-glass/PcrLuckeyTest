@@ -29,7 +29,7 @@ var lilys = [
 //=========随机内容end=========
 function str_to_ascii(str){
 	let ascii = "";
-	for(let n = 0;n<(str.length<9?str.length:8);n++){
+	for(let n = 0;n<(str.length>9?8:str.length);n++){
 		ascii += str.charAt(n).charCodeAt();
    }
    return ascii;
@@ -42,15 +42,16 @@ function str_to_ascii(str){
 ****建议修改r_name为随机字符串****
 **********************************
 *****************/
-var r_name = "pcr";
+var r_name = "pcraccn";
 var today = new Date();
-var seed = Number(""+today.getFullYear()+today.getMonth()+today.getDate()+str_to_ascii(r_name));
+var seed = Number(""+today.getFullYear()+today.getMonth()+today.getDate());
+seed += str_to_ascii(r_name);
 function seededRandom(max,min) { 
     max = max || 1;
     min = min || 0; 
     seed = (seed * 9301 + 49297) % 233280; 
     let rnd = seed / 233280.0;
-	//console.log(rnd);
+	//console.log(str_to_ascii(r_name));
     return parseInt(min + rnd * (max - min)); 
 };
 function add_to_good_or_bad(target,content){
@@ -91,7 +92,7 @@ $(document).ready(function(){
 	lucky_or_unfortunately();
 	var weeks = ["日","一","二","三","四","五","六"];
 	add_to_tips(".date",today.getFullYear() + "年" + (today.getMonth() + 1) + "月" + today.getDate() + "日 | 星期" + weeks[today.getDay()]);
-	add_to_tips(".lucky_star",kira_kira(seededRandom(5,1)));
 	add_to_tips(".lucky_lily",lilys[seededRandom(lilys.length,0)]);
+	add_to_tips(".lucky_star",kira_kira(seededRandom(5,1)));
 	add_to_tips(".direction_gacha",directions[seededRandom(directions.length,0)]);
 });
